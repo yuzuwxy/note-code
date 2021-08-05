@@ -168,3 +168,71 @@ int main() {
 	}
 	return 0;
 }
+
+
+//欧拉函数：
+在数论中，对于正整数N,少于或等于N ([1,N]),且与N互质的正整数(包括1)的个数，记作φ(n)。
+
+(1)直接求小于或等于n,且与n互质的个数:
+
+  int Euler(int n)
+
+{
+
+    int ret=n;
+
+    for(int i=2;i<=sqrt(n);i++)
+
+     if(n%i==0)
+
+      {
+
+        ret=ret/i*(i-1);//先进行除法防止溢出(ret=ret*(1-1/p(i)))
+
+        while(n%i==0)
+
+          n/=i;
+
+     }
+
+    if(n>1)
+
+          ret=ret/n*(n-1);
+
+        return ret;
+
+}
+
+ 
+
+筛选模板:求[1,n]之间每个数的质因数的个数
+
+#define size 1000001
+
+int euler[size];
+
+void Init()
+
+{
+
+     memset(euler,0,sizeof(euler));
+
+          euler[1]=1;
+
+     for(int i=2;i<size;i++)
+
+       if(!euler[i])
+
+       for(int j=i;j<size;j+=i)
+
+       {
+
+              if(!euler[j])
+
+               euler[j]=j;
+
+               euler[j]=euler[j]/i*(i-1);//先进行除法是为了防止中间数据的溢出
+
+         }
+
+}
